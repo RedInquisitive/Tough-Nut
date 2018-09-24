@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="TheToddLuci0">
+    <link rel="icon" href="/static/images/favicon.ico">
+
+    <title>{% block title %}Coover Defense Contractors {% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    {# <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico"> #}
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdtLS07uDg4P/W1tb3CgoKigAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA63t3d/mGy2/9Op93/Pp/Y/8zR1P9aWlq9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT2tra/VW07v9EofP/OaP4/0iy9v8+tfP/usHK/wwMDJYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAra2t7Duj4/8qku//EYTy/0RISv82jcT/Q773/yqp5//b2tr+AAAATQAAAAAAAAAAAAAAAAAAAAAAAAAAHh4ee5O50P8lk+//FITs/w1z0v8qIx7/RXKN/0O/9/9CwPf/KYvD/5OTk98AAAAAAAAAAAAAAAAAAAAAAAAAAczMzPQYlen/Mpfv/wV96v8BfOz/EXDA/yOQ3f87tvb/QL73/zOv8//Dxsr/AAAAXwAAAAAAAAAAAAAAAAAAABe50dz/KZjw/y6X7v8AfOn/DGWz/y0tK/80YID/KqTz/zWv8/8yqPP/RY+6/4GBgcoAAAAAAAAAAAAAAAAfHx9AXrvf/zi49f8nke7/AH7p/wxhqP8aGxv/K01r/xSP7/8glO//I5Pt/xV+zf/JycnzAAAAAAAAAAAAAAAAJSUlVySx4P8/xfj/Jbj1/wB/6f8NWJf/BAQF/x03TP8Dfuz/Cnvn/xR75/8Mcdj/19fX+wAAAAAAAAAAAAAAACUlJVcSt+j/Q8f4/zbA9/8NsPP/InCY/wkICf8NIDH/AHXp/wRv5P8NcOL/AWLc/9bW1vwAAAAAAAAAAAAAAAAlJSVXIMPv/1PQ+v972fv/YtD6/1+Urf9YWVr/OkdO/wGN7/8Igub/C3fj/wBc3f/X19f8AAAAAAAAAAAAAAAAJSUlVzK+5/9Mzvb/ruz//8Px//+TtcL/a3By/z5OWP8Jl+7/B4fp/wBy4P8Eb8P/0NDQ/AAAAAAAAAAAAAAAAAAAAA/Ly8vX9/f3+rzb6f/I7Pn/pOf//0rK+/8JpvP/AI7o/0yby//Y2Nj/pKSk4kdHR3sAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6r6+v0JnS5v9Buun/RarZ/8LFxvZDQ0N3AAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQkJA5TU1OMn5+f3Xh4eLIAAAAvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAPw/AAD4HwAA8A8AAOAPAADgBwAAwAcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMAHAAD4PwAA/H8AAA==" rel="icon" type="image/x-icon" />
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Coover Defense Contractors</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('map') }}">Map</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-10 blog-main">
+            <!-- Main component for a primary marketing message or call to action -->
+            {% block content %}
+                <h1 class="h1">If you can see this, the devs messed up</h1>
+            {% endblock %}
+        </div>
+        {% block amazonAd %}
+
+        {% endblock %}
+    </div>
+    <br>
+    <br>
+ <!-- /container -->
+{# <footer>
+    <div class="container">
+        <p class="text-muted">Developed by TheToddLuci0 and wrickert. All rights reserved.<p align="left">Tweet about us with <a href="https://twitter.com/search?q=%23isucdc">#isucdc</a></p> </p>
+        <table width="100%">
+            <tr>
+                <td width="50%"><p class="text-muted" align="center">Developed by <a href="#" data-toggle="tooltip" data-placement="top" title="Recovering Red Teamer!">TheToddLuci0</a> and wrickert. All rights reserved.</p></td>
+                <td width="50%"><p class="text-muted" align="center">Tweet about us with <a href="https://twitter.com/search?q=%23isucdc">#isucdc</a></p></td>
+            </tr>
+        </table>
+    </div>
+</footer> #}
+
+<!-- Bootstrap core JavaScript
+   ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/static/js/bootstrap.min.js"></script>
+<!-- Always check your comments, and checkout the /commands API! -->
+</body>
+</html>

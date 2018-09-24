@@ -1,0 +1,165 @@
+{% extends "skeleton.html" %} {% block content %}
+<meta http-equiv="refresh" content="10">                
+
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="container" style="max-width:1000px;">
+            <img src="/static/images/Coover_First_Floor.jpg" id="map" class="image-rounded" alt="Building map" style="width:1px;height:1px;">
+            {# <p><button onclick="myCanvas()" class="btn btn-default">Click here to see your system status on the map</button></p> #}
+
+            <canvas id="mapCanvas" width="1000" height="772">Your browser does not support the HTML5 canvas tag.</canvas>
+
+            <script>
+                {# function myCanvas() { #}
+                    var c = document.getElementById("mapCanvas");
+                    var ctx = c.getContext("2d");
+                    var img = document.getElementById("map");
+                    ctx.drawImage(img, 10, 10, 1000, 772);
+                    {# //West Door     #}
+                    {% if status[3] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[3] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(65, 441, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //East Door #}
+                    {% if status[2] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[2] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(935, 480, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //South Door #}
+                    {% if status[1] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[1] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(350, 712, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //North Door #}
+                    {% if status[0] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[0] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(190, 117, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //West Hall #}
+                    {% if status[7] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[7] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(218, 395, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //East Hall #}
+                    {% if status[6] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[6] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(868, 398, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //South Hall #}
+                    {% if status[5] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[5] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(370, 487, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    {# //North Hall #}
+                    {% if status[4] == "1" %} 
+                        ctx.fillStyle = 'green';
+                    {% elif status[4] == "0" %} 
+                        ctx.fillStyle = 'red';
+                    {% else %}
+                        ctx.fillStyle = 'black';
+                    {% endif %}
+                    ctx.beginPath();
+                    ctx.arc(335, 199, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+
+                {# } #}
+            </script>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="container-fluid" style="width:300px;margin-top: 150px;">
+            <div class="btn-group-vertical">
+                <button type="button" class="btn  {% if status[6] == "1" %}btn-success{% elif status[6] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('east', 'hall')">East Hallway</button>
+                <button type="button" class="btn  {% if status[7] == "1" %}btn-success{% elif status[7] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('west', 'hall')">West Hallway</button>
+                <button type="button" class="btn  {% if status[4] == "1" %}btn-success{% elif status[4] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('north', 'hall')">North Hallway</button>
+                <button type="button" class="btn  {% if status[5] == "1" %}btn-success{% elif status[5] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('south', 'hall')">South Hallway</button>
+            </div>
+            <br/>
+            <div class="btn-group-vertical" style="margin-top: 50px;">
+                <button type="button" class="btn  {% if status[2] == "1" %}btn-success{% elif status[2] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('east', 'door')">East Door</button>
+                <button type="button" class="btn  {% if status[3] == "1" %}btn-success{% elif status[3] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('west', 'door')">West Door</button>
+                <button type="button" class="btn  {% if status[0] == "1" %}btn-success{% elif status[0] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('north', 'door')">North Door</button>
+                <button type="button" class="btn  {% if status[1] == "1" %}btn-success{% elif status[1] == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('south', 'door')">South Door</button>
+            </div>
+        </div>
+    </div>
+<script>
+function submitter(loc, typ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  if(typ == 'door'){
+      xhttp.open("post", "{{ url_for("dor") }}"+loc, true);
+      }
+  else{
+      xhttp.open("post", "{{ url_for("hal") }}"+loc, true);
+  }
+  xhttp.send();
+  setTimeout(location.reload(), 1000);
+}
+</script>
+<p id="demo"><p>
+    {% endblock %}
+    {% block amazonAd %} {% endblock %}

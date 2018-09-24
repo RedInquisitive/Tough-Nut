@@ -1,0 +1,39 @@
+{% extends "skeleton.html" %}
+{% block title %}TEST PAGE - {{ super() }} {% endblock %}
+{% block content %}
+    <h1 class="h1" align="center">Here's all the employers we have</h1>
+    <h3 align="center">Just click one to see more details.</h3>
+    <div class="col-lg">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>Are we missing someone? Click <a href="http://www.bigcheese.review/addNewCompany">here</a> to add them!</p>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "skeleton.html" %}
+{% block content %}
+
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Welcome to the official site of the Coover Defense Contractors!</h1>
+            <p>
+                Here at Coover Defense Contractors, our goal is to help you not die!
+            </p>
+            <h2>How do we do that?</h2>
+            <p>By using the power of people. We take the experiences of people like you and compile them in our centralised database, and calculate an average rating for each building.</p>
+            <h2>How does this help?</h2>
+            <p>By looking at the experiences of others, you can learn the things that have ruined others, and work with our experts to come up with a plan that works for you.</p>
+            <p><a style="margin-right: 20px" class="btn btn-primary btn-lg" href="{{ url_for('map') }}" role="button">Get Started &raquo;</a><a class="btn btn-primary btn-lg" href="{{ url_for('about') }}" role="button">Learn more &raquo;</a> </p>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}

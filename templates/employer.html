@@ -1,0 +1,27 @@
+{% extends "skeleton.html" %}
+{% block content %}
+
+    <h1 class="h1" align="center">{{ name }}</h1>
+       <div class="col-lg">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Review</th>
+                <th>Score</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in reviews %}
+                <tr>
+                <td> {{ item[1] }} </td>
+                <td> {{ item[2] }} </td>
+                <td> {{ item[3] }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p>Would you like to add a review for this company? Click <a href="http://www.bigcheese.review/addReview/{{ name }}">here</a> to add it!</p>
+
+{% endblock %}
