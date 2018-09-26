@@ -1,5 +1,4 @@
 {% extends "skeleton.html" %} {% block content %}
-<meta http-equiv="refresh" content="10">
 
 <script>
 function submitter(loc, typ) {
@@ -22,6 +21,10 @@ function submitter(loc, typ) {
 		location.reload();
 	}, 1000);
 }
+
+setTimeout(function() {
+	location.reload();
+}, 10000);
 </script>
 
 <div style="text-align: center;">

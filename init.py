@@ -5,7 +5,6 @@ from models import User, State, Base
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://thecellar:thecellar@localhost:3306/thecellar'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'U9Xx4C8qCPdg13PR3k0byq2Bv70thfwR'
 db = SQLAlchemy(app)
 
 Base.metadata.drop_all(bind=db.engine)
