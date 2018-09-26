@@ -63,7 +63,7 @@ def swap(dir, type):
 	return True
 
 def do(dir):
-	swap(dir, "door")
+	return swap(dir, "door")
 
 def ha(dir):
-	swap(dir, "hall")
+	return swap(dir, "hall")

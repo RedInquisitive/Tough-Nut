@@ -10,6 +10,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'U9Xx4C8qCPdg13PR3k0byq2Bv70thfwR'
 db.init_app(app)
 
+def loc(status, dir, type):
+	for elem in status:
+		if elem.key == (dir + type):
+			return elem.state
+	return "?"
+
 @app.route("/")
 def index():
 	return render_template('index.html')
@@ -73,7 +79,16 @@ def check():
 def map():
 	if backend.userAuthorized():
 		stat = backend.currentState()
-		return render_template('map.html', status=stat)
+		#I hate myself for doing this but I just want this done
+		nd = loc(stat, "north", "door")
+		nh = loc(stat, "north", "hall")
+		sd = loc(stat, "south", "door")
+		sh = loc(stat, "south", "hall")
+		ed = loc(stat, "east", "door")
+		eh = loc(stat, "east", "hall")
+		wd = loc(stat, "west", "door")
+		wh = loc(stat, "west", "hall")
+		return render_template('map.html', nd=nd, nh=nh, sd=sd, sh=sh, ed=ed, eh=eh, wd=wd, wh=wh)
 	else:
 		return redirect(url_for('login'))
 
