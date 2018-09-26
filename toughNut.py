@@ -1,141 +1,125 @@
-#from flask import Flask, flash, redirect, render_template, request, session, abort, make_response, redirect_back
-from flask import *
-import subprocess
-import requests
-import backend 
+from flask import Flask, redirect, render_template, request, session, make_response, url_for
 from flask_sqlalchemy import SQLAlchemy
-
+from models import User, State, Base
+from data import db
+import backend 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://thecellar:thecellar@localhost:3306/thecellar'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:cdc@localhost/theCellar'
-db = SQLAlchemy(app)
+app.secret_key = 'U9Xx4C8qCPdg13PR3k0byq2Bv70thfwR'
 db.init_app(app)
-#Bootstrap(app)
 
 @app.route("/")
 def index():
 	return render_template('index.html')
 
+@app.route("/login/")
+def login():
+	return render_template('login.html')
+
+@app.route("/logout/")
+def logout():
+	backend.userLogout()
+	return redirect(url_for('login'))
+
+#Create a new user
+@app.route('/user/', methods=['POST'])
+def user():
+	pin = '991257'
+	result = request.form
+	if not result['admin_pin'] == pin:
+		return render_template('error/400.html', message="Pin wrong")
+
+	uname = result['display_name']
+	fname = result['first_name']
+	lname = result['last_name']
+	password = result['password']
+	password2 = result['password_confirmation']
+	
+	max = 30
+	if len(uname) > max or len(fname) > max or len(lname) > max or len(password) > max:
+		return render_template('error/400.html', message="fields should be less than " + max + " characters")
+
+	min = 2
+	if len(uname) <= min or len(fname) <= min or len(lname) <= min or len(password) <= min:
+		return render_template('error/400.html', message="fields should be greater than " + min + " characters")	
+
+	if len(password) < 10:
+		return render_template('error/400.html', message="password should be at least 10 characters")
+
+	if password != password2:
+		return render_template('error/400.html', message="passwords do not match")
+
+	success = backend.userAdd(uname, password, fname, lname)
+	
+	if success:
+		return redirect(url_for('login'))
+
+	return render_template('error/400.html', message="Display name " + result['display_name'] + " taken.")
+
+#Authenticate a user
+@app.route('/check/', methods=['POST'])
+def check():
+	result = request.form
+	success = backend.userLogin(result['uname'], result['password'])
+	if success:
+		return redirect(url_for('map'))
+	else:
+		return render_template('error/400.html', message="Wrong user name or password")
+
+#User main view
+@app.route("/map/")
+def map():
+	if backend.userAuthorized():
+		stat = backend.currentState()
+		return render_template('map.html', status=stat)
+	else:
+		return redirect(url_for('login'))
+
+@app.route("/door/<string:dir>")
+def door(dir):
+	if backend.userAuthorized():
+		result = backend.do(dir)
+		if result:
+			return render_template('error/200.html', message="OK"), 200
+		else:
+			return render_template('error/400.html', message="Bad door specified."), 400
+	return redirect(url_for('login'))
+
+@app.route("/hall/<string:dir>")
+def hall(dir):
+	if backend.userAuthorized():
+		result = backend.ha(dir)
+		if result:
+			return render_template('error/200.html', message="OK"), 200
+		else:
+			return render_template('error/400.html', message="Bad hall specified."), 400
+	return redirect(url_for('login'))
+
+#Static pages
 @app.route("/about/")
 def about():
 	return render_template('about.html')
-
-#TODO find 
-#stat = [False]*8
-#stat = ["1","1","1","potato","0","0","0","0"]
-
-@app.route("/map/", methods=['POST', 'GET'])
-def map():
-	#check to see if user is logged in
-	if request.cookies.get('loggedIn'):
-		stat = backend.currentState()		
-		print("BACKEND STATUS ************************************")
-		print(stat)
-		return render_template('map.html', status=stat)
-	else:
-		return render_template('login.html')
-
-@app.route('/user/', methods=['POST', 'GET'])
-def user():
-	pin = '0000'
-
-	if request.method == 'POST':
-		result = request.form
-		print(result)
-		if result['admin_pin'] == pin:
-			success = backend.addUser(result['display_name'], result['password'], result['first_name'], result['last_name'])
-			if success:
-				stat = backend.currentState()
-				print(stat)
-				return render_template('map.html', status=stat)
-			else:
-				return render_template('error.html', name=result['display_name'])
-	url = "64.5.53.50"
-	display_name=result['display_name']
-	requests.get("http://"+url+'/add.php?stuff=northdoor,' + display_name).content
-	requests.get("http://"+url+'/add.php?stuff=southdoor,' + display_name).content
-	requests.get("http://"+url+'/add.php?stuff=eastdoor,' + display_name).content
-	requests.get("http://"+url+'/add.php?stuff=westdoor,' + display_name).content
-	username = request.cookies.get('username')
-	return render_template('userProfile.html', name=username)
-
-
-@app.route('/check/', methods=['POST', 'GET'])
-def check():
-	if request.method == 'POST':
-		result = request.form
-		print("Are you here?")
-		print(result)
-		success = backend.checkPassword(result['uname'], result['password'])
-		print("after backend check")
-		print(success)
-		if success:
-			print(result['uname'])
-			username = backend.userForEmail(result['uname'])
-			#TODO make redirect not render
-			#resp = make_response()
-			resp = make_response(redirect(url_for('map'),302), 302)
-			resp.set_cookie('loggedIn', 'True')
-			resp.set_cookie('username', username)
-			#print(request.cookies.get('username'))
-			#print(request.cookies.get('loggedIn'))
-			return resp
-			#return redirect(url_for('map'),302,resp)
-		else:
-			return render_template('error.html')#, name=result['display_name'])
-
 
 @app.route("/signup/")
 def signup():
 	return render_template('signup.html')
 
-@app.route("/login/")
-def login():
-	return render_template('login.html')
-
-@app.route("/Test/")
-def test():
-	return render_template('Test.html')
-		
 @app.route("/command/<string:name>/")
 def command(name):
-	return render_template(
-		'cmd.html', cmd=subprocess.check_output(name))
+	print("An attempt to run " + name + " was made!")
+	return render_template('error/402.html', message="um no u"), 402
 
 @app.route("/command/<string:name>/<string:args>/")
-def commandArgs(name):
-	return render_template(
-		'cmd.html', cmd=subprocess.check_output([name,args]))
+def commandArgs(name, args):
+	print("An attempt to run '" + name + "' with '" + args + "' was made!")
+	return render_template('error/402.html', message="um no u"), 402
 
 @app.route("/door/")
 def dor():
-	return render_template('error.html')
+	return render_template('error/400.html', message="You need to specify what door."), 400
 	
 @app.route("/hall/")
 def hal():
-	return render_template('error.html')
-	
-
-@app.route("/mapabout")
-def mapabout():
-	return redirect(url_for('map'))
-
-@app.route("/door/<string:dir>", methods=['POST','GET'])
-def door(dir):
-	print(dir)
-	result = backend.do(dir)
-	if result:
-		return redirect(url_for('map'),205)
-	else:
-		print("TODO make an error page")
-	
-@app.route("/hall/<string:dir>", methods=['POST','GET'])
-def hall(dir):
-	print(dir)
-	result = backend.ha(dir)
-	if result:
-		return redirect(url_for('map'),302)
-	else:
-		print("TODO make an error page")
+	return render_template('error/400.html', message="You need to specify what hall."), 400
