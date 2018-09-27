@@ -1,6 +1,10 @@
 {% extends "skeleton.html" %} {% block content %}
 
 <script>
+var reload = setTimeout(function() {
+	location.reload();
+}, 10000);
+
 function submitter(loc, typ) {
 	var xhttp = new XMLHttpRequest();
 	
@@ -17,14 +21,11 @@ function submitter(loc, typ) {
 	}
 	
 	xhttp.send();
+	clearTimeout(reload);
 	setTimeout(function() {
 		location.reload();
-	}, 1000);
+	}, 2000);
 }
-
-setTimeout(function() {
-	location.reload();
-}, 10000);
 </script>
 
 <div style="text-align: center;">
