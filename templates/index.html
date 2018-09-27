@@ -1,24 +1,61 @@
 {% extends "skeleton.html" %}
 {% block content %}
 
+<div class="container">
+	<div class="jumbotron">
+		<h1>Welcome to the official site of the Coover Defense Contractors!</h1>
+		
+		<p>
+			Here at Coover Defense Contractors, our goal is to help you not die!
+		</p>
+		
+		<h2>How do we do that?</h2>
+		
+		<p>
+			By using the power of people. We take the experiences of people like you 
+			and compile them in our centralized database, and calculate an average rating 
+			for each building.
+		</p>
+		
+		<h2>How does this help?</h2>
+		
+		<p>
+			By looking at the experiences of others, you can learn the things that have 
+			ruined others, and work with our experts to come up with a plan that works for you.
+		</p>
+		
+		<p>
+			<a style="margin: 0 10px 10px 0" class="btn btn-primary btn-lg" href="{{ url_for('map') }}" role="button">Get Started &raquo;</a>
+			<a style="margin: 0 10px 10px 0" class="btn btn-primary btn-lg" href="{{ url_for('about') }}" role="button">Learn more &raquo;</a> 
+			<a style="margin: 0 10px 10px 0" class="btn btn-primary btn-lg" href="#"  data-toggle="modal" data-target="#modal-terms">Terms and Conditions &raquo;</a>
+		</p>
+	</div>
+</div>
 
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Welcome to the official site of the Coover Defense Contractors!</h1>
-            <p>
-                Here at Coover Defense Contractors, our goal is to help you not die!
-            </p>
-            <h2>How do we do that?</h2>
-            <p>By using the power of people. We take the experiences of people like you and compile them in our centralised database, and calculate an average rating for each building.</p>
-            <h2>How does this help?</h2>
-            <p>By looking at the experiences of others, you can learn the things that have ruined others, and work with our experts to come up with a plan that works for you.</p>
-            <p><a style="margin-right: 20px" class="btn btn-primary btn-lg" href="{{ url_for('map') }}" role="button">Get Started &raquo;</a><a class="btn btn-primary btn-lg" href="{{ url_for('about') }}" role="button">Learn more &raquo;</a> </p>
-        </div>
-    </div>
-
-
-
-
-
+<div class="modal fade" id="modal-terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
+			</div>
+			<div class="modal-body">
+				<p>We will store the date you give us solely for the purpose of tracking you internaly and
+					ensuring abuse.</p>
+				<section>
+					<h2 class="list-group-item-heading">We will:</h2>
+					<ul>
+						<li>Sell your data</li>
+						<li>Give it away</li>
+						<li>Use it for any unethical purposes</li>
+					</ul>
+				</section>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

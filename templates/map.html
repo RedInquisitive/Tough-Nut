@@ -5,15 +5,15 @@ function submitter(loc, typ) {
 	var xhttp = new XMLHttpRequest();
 	
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
+		if (this.readyState == 4) {
 			document.getElementById("demo").innerHTML = this.responseText;
 		}
 	};
 	
 	if(typ == 'door') {
-		xhttp.open("get", "/door/"+loc, true);
+		xhttp.open("get", "/door/" + loc, true);
 	} else {
-		xhttp.open("get", "/hall/"+loc, true);
+		xhttp.open("get", "/alarm/" + loc, true);
 	}
 	
 	xhttp.send();
@@ -29,18 +29,20 @@ setTimeout(function() {
 
 <div style="text-align: center;">
 	<p id="demo">No Action Running<p>
+	<h4>You can only disable alarms from this interface.<h4>
+	<h5 class="text-muted">Please use Devices to fully manage the alarms.</h5>
 	<div class="btn-group-horizontal" style="margin: 10px auto; display: inline-block;">
-		<button type="button" class="btn  {% if eh == "1" %}btn-success{% elif eh == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('east', 'hall')">East Hallway</button>
-		<button type="button" class="btn  {% if wh == "1" %}btn-success{% elif wh == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('west', 'hall')">West Hallway</button>
-		<button type="button" class="btn  {% if nh == "1" %}btn-success{% elif nh == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('north', 'hall')">North Hallway</button>
-		<button type="button" class="btn  {% if sh == "1" %}btn-success{% elif sh == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('south', 'hall')">South Hallway</button>
+		<button type="button" class="btn  {% if eal == "1" %}btn-success{% elif eal == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('east', 'hall')">East Alarm</button>
+		<button type="button" class="btn  {% if wal == "1" %}btn-success{% elif wal == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('west', 'hall')">West Alarm</button>
+		<button type="button" class="btn  {% if nal == "1" %}btn-success{% elif nal == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('north', 'hall')">North Alarm</button>
+		<button type="button" class="btn  {% if sal == "1" %}btn-success{% elif sal == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('south', 'hall')">South Alarm</button>
 	</div>
-	<br>
+	<h4>You can manage all locks through this interface.<h4>
 	<div class="btn-group-horizontal" style="margin: 10px auto; display: inline-block;">
-		<button type="button" class="btn  {% if ed == "1" %}btn-success{% elif ed == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('east', 'door')">East Door</button>
-		<button type="button" class="btn  {% if wd == "1" %}btn-success{% elif wd == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('west', 'door')">West Door</button>
-		<button type="button" class="btn  {% if nd == "1" %}btn-success{% elif nd == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('north', 'door')">North Door</button>
-		<button type="button" class="btn  {% if sd == "1" %}btn-success{% elif sd == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('south', 'door')">South Door</button>
+		<button type="button" class="btn  {% if edo == "1" %}btn-success{% elif edo == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('east', 'door')">East Door</button>
+		<button type="button" class="btn  {% if wdo == "1" %}btn-success{% elif wdo == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('west', 'door')">West Door</button>
+		<button type="button" class="btn  {% if ndo == "1" %}btn-success{% elif ndo == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('north', 'door')">North Door</button>
+		<button type="button" class="btn  {% if sdo == "1" %}btn-success{% elif sdo == "0"  %}btn-danger{% else %}btn-warning{% endif %}  btn-lg" onclick="submitter('south', 'door')">South Door</button>
 	</div>
 </div>
 <script>
@@ -50,9 +52,9 @@ function myCanvas() {
 	var img = document.getElementById("map");
 	ctx.drawImage(img, 10, 10, 1000, 772);
 	{# //West Door     #}
-	{% if wd == "1" %} 
+	{% if wdo == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif wd == "0" %} 
+	{% elif wdo == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -63,9 +65,9 @@ function myCanvas() {
 	ctx.stroke();
 
 	{# //East Door #}
-	{% if ed == "1" %} 
+	{% if edo == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif ed == "0" %} 
+	{% elif edo == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -76,9 +78,9 @@ function myCanvas() {
 	ctx.stroke();
 
 	{# //South Door #}
-	{% if sd == "1" %} 
+	{% if sdo == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif sd == "0" %} 
+	{% elif sdo == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -89,9 +91,9 @@ function myCanvas() {
 	ctx.stroke();
 
 	{# //North Door #}
-	{% if nd == "1" %} 
+	{% if ndo == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif nd == "0" %} 
+	{% elif ndo == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -101,10 +103,10 @@ function myCanvas() {
 	ctx.fill();
 	ctx.stroke();
 
-	{# //West Hall #}
-	{% if wh == "1" %} 
+	{# //West Alarm #}
+	{% if wal == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif wh == "0" %} 
+	{% elif wal == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -114,10 +116,10 @@ function myCanvas() {
 	ctx.fill();
 	ctx.stroke();
 
-	{# //East Hall #}
-	{% if eh == "1" %} 
+	{# //East Alarm #}
+	{% if eal == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif eh == "0" %} 
+	{% elif eal == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -127,10 +129,10 @@ function myCanvas() {
 	ctx.fill();
 	ctx.stroke();
 
-	{# //South Hall #}
-	{% if sh == "1" %} 
+	{# //South Alarm #}
+	{% if sal == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif sh == "0" %} 
+	{% elif sal == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
@@ -140,10 +142,10 @@ function myCanvas() {
 	ctx.fill();
 	ctx.stroke();
 
-	{# //North Hall #}
-	{% if nh == "1" %} 
+	{# //North Alarm #}
+	{% if nal == "1" %} 
 		ctx.fillStyle = 'green';
-	{% elif nh == "0" %} 
+	{% elif nal == "0" %} 
 		ctx.fillStyle = 'red';
 	{% else %}
 		ctx.fillStyle = 'black';
